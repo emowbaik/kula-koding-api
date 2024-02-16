@@ -14,4 +14,12 @@ class ToolsController extends Controller
             "tools" => $tools,
         ], 200);
     }
+
+    function Show($id) {
+        $tools = Tools::firstWhere("id", $id);
+
+        return response()->json([
+            "tools" => $tools,
+        ], 200);
+    }
 }
