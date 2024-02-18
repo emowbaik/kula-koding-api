@@ -35,6 +35,7 @@ Route::prefix("/v1")->group(function () {
 
     Route::middleware("auth:sanctum")->group(function () {
         Route::get("/user", [AuthController::class, "User"]);
+        Route::post("/user", [AuthController::class, "editProfile"]);
         Route::resource('/tool', ToolsController::class);
         Route::resource("/project", ProjectController::class);
         Route::post("/project/komentar/{id}", [KomentarController::class, "Store"]);
