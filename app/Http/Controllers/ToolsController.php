@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class ToolsController extends Controller
 {
-    function Index() {
+    function Index()
+    {
         $tools = Tools::all();
 
         return response()->json([

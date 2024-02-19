@@ -6,6 +6,7 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Image;
 use App\Models\Komentar;
 use App\Models\Project;
+use App\Models\Tools;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,8 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    function Index() {
+    function Index()
+    {
         $user = Auth::user();
 
         $project = Project::where("user_id", $user->id)->get()->load("Image");
@@ -23,7 +25,8 @@ class ProjectController extends Controller
         return response()->json($project, 200);
     }
 
-    function Show($id) {
+    function Show($id)
+    {
         $project = Project::firstWhere("id", $id)->load(["Image", "User"]);
 
         if ($project) {
@@ -33,52 +36,59 @@ class ProjectController extends Controller
                 "message" => "Data tidak ditemukan"
             ], 404);
         }
-
     }
 
-    function Store(Request $request) {
+    function Store(Request $request)
+    {
+        try {
+            $user = $request->user(); // Assume authenticated user
+            $tools = Tools::firstWhere("tools", $request->tools);
 
-        $validation = Validator::make($request->all(), [
-            "nama_project" => "required",
-            "deskripsi" => "required",
-            "image" => "image|file|required"
-        ]);
-
-        if ($validation->fails()) {
-            return response()->json($validation->errors(), 400);
-        }
-
-        $user = Auth::user();
-
-        $payload = [
-            "nama_project" => $request->nama_project,
-            "deskripsi" => $request->deskripsi,
-            "user_id" => $user->id,
-            "tool_id" => $request->tool
-        ];
-
-        $project = Project::create($payload);
-
-        $image = $request->file("image");
-
-            $extension = $image->extension();
-            $dir = "storage/project/";
-            $name = Str::random(32) . '.' . $extension;
-            $foto = $dir . $name;
-            $image->move($dir, $name);
-            
-            Image::create([
-                "project_id" => $project->id,
-                "image" => $foto
+            $validation = Validator::make($request->all(), [
+                "nama_project" => "required",
+                "deskripsi" => "required",
+                "image.*" => "image|required"
             ]);
 
+            if ($validation->fails()) {
+                return response()->json($validation->errors(), 400);
+            }
 
-        return response()->json([
-            "message" => "Project berhasil diupload!"
-        ], 201);
+            $payload = [
+                "nama_project" => $request->nama_project,
+                "deskripsi" => $request->deskripsi,
+                "user_id" => $user->id,
+                "tool_id" => $tools->id
+            ];
+
+            $project = Project::create($payload);
+
+            foreach ($request->file("image") as $uploadedImage) {
+                $extension = $uploadedImage->extension();
+                $dir = "storage/project/";
+                $name = Str::random(32) . "." . $extension;
+                $foto = $dir . $name;
+                $uploadedImage->move($dir, $name);
+
+                Image::create([
+                    "project_id" => $project->id,
+                    "image" => $foto
+                ]);
+            }
+
+            return response()->json([
+                "message" => "Project berhasil diupload!"
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat mengunggah proyek.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    function Update($id, ProjectRequest $request) {
+    function Update($id, ProjectRequest $request)
+    {
         $user = Auth::user();
         $project = Project::firstWhere("id", $id);
 
@@ -88,7 +98,7 @@ class ProjectController extends Controller
         if ($project) {
             if ($project->user_id == $user->id) {
                 $project->update($payload);
-                        
+
                 return response()->json([
                     "message" => "Data berhasil diupdate!"
                 ], 200);
@@ -104,7 +114,8 @@ class ProjectController extends Controller
         }
     }
 
-    function Destroy($id) {
+    function Destroy($id)
+    {
         $user = Auth::user();
         $project = Project::firstWhere("id", $id);
 
@@ -112,7 +123,7 @@ class ProjectController extends Controller
             $komentar = Komentar::where("project_id", $id);
             $komentar->delete();
             $project->delete();
-    
+
             return response()->json([
                 "message" => "Data berhasil dihapus"
             ], 200);
