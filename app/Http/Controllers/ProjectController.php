@@ -54,8 +54,10 @@ class ProjectController extends Controller
             "nama_project" => $request->nama_project,
             "deskripsi" => $request->deskripsi,
             "user_id" => $user->id,
-            "tool_id" => $request->tool
+            "tool" => $request->tool
         ];
+
+        // return $payload;
 
         $project = Project::create($payload);
 
