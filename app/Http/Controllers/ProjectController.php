@@ -41,9 +41,6 @@ class ProjectController extends Controller
     function Store(Request $request)
     {
         try {
-            $user = $request->user(); // Assume authenticated user
-            $tools = Tools::firstWhere("tools", $request->tools);
-
             $validation = Validator::make($request->all(), [
                 "nama_project" => "required",
                 "deskripsi" => "required",
@@ -54,11 +51,13 @@ class ProjectController extends Controller
                 return response()->json($validation->errors(), 400);
             }
 
+            $user = Auth::user();
+
             $payload = [
                 "nama_project" => $request->nama_project,
                 "deskripsi" => $request->deskripsi,
                 "user_id" => $user->id,
-                "tool_id" => $tools->id
+                "tool_id" => $request->tool
             ];
 
             $project = Project::create($payload);
@@ -77,6 +76,7 @@ class ProjectController extends Controller
             }
 
             return response()->json([
+                "data" => $project,
                 "message" => "Project berhasil diupload!"
             ], 201);
         } catch (\Exception $e) {
@@ -86,6 +86,7 @@ class ProjectController extends Controller
             ], 500);
         }
     }
+
 
     function Update($id, ProjectRequest $request)
     {
