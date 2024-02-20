@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Komentar extends Model
 {
@@ -11,4 +12,8 @@ class Komentar extends Model
 
     protected $table = "komentars";
     protected $guarded = ["id"];
+
+    function User() : BelongsTo {
+        return $this->belongsTo(User::class, "user_id");
+    }
 }

@@ -37,9 +37,11 @@ Route::prefix("/v1")->group(function () {
 
     Route::middleware("auth:sanctum")->group(function () {
         Route::get("/user", [AuthController::class, "User"]);
+        Route::put("/user", [ControllersUserController::class, "Update"]);
         Route::resource('/tool', ToolsController::class);
         Route::resource("/project", ProjectController::class);
         Route::post("/project/komentar/{id}", [KomentarController::class, "Store"]);
+        Route::get("/project/komentar/{id}", [KomentarController::class, "Show"]);
         Route::delete("/project/komentar/{id}/{komentar:id}", [KomentarController::class, "destroy"]);
         Route::put("/project/{id}", [ProjectController::class, "Update"]);
         
