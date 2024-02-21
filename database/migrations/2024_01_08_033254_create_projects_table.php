@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
-            $table->json("tool_id");
+            $table->json("tool");
             $table->string("nama_project");
             $table->text("deskripsi");
             $table->string("github")->nullable();
