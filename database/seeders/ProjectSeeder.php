@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i=0; $i < 20; $i++) { 
+        for ($i = 0; $i < 20; $i++) {
             Project::create([
                 "user_id" => 1,
                 "tool" => '[
