@@ -15,28 +15,30 @@ use function Laravel\Prompts\alert;
 
 class ProjectController extends Controller
 {
-    function Index() {
+    function Index()
+    {
         $data = Project::with("image")->paginate(6);
 
         return $data;
     }
 
-    function AllProject() {
-        $data = Project::all();
+    function AllProject()
+    {
+        $data = Project::all()->load("Image");
 
         return $data;
     }
 
-    function Show($id) {
+    function Show($id)
+    {
         $project = Project::firstWhere("id", $id);
 
         return response()->json($project, 200);
     }
 
-    function Store(Request $request) {
-        $validation = Validator::make($request->all(), [
-            
-        ]);
+    function Store(Request $request)
+    {
+        $validation = Validator::make($request->all(), []);
 
         if ($validation->fails()) {
             return response()->json($validation->errors(), 401);
@@ -65,7 +67,8 @@ class ProjectController extends Controller
         ], 201);
     }
 
-    function Update($id, Request $request) {
+    function Update($id, Request $request)
+    {
         $project = Project::firstWhere("id", $id);
 
         $project->update($request->all());
@@ -76,7 +79,8 @@ class ProjectController extends Controller
         ], 200);
     }
 
-    function Delete($id) {
+    function Delete($id)
+    {
         $project = Project::firstWhere("id", $id);
 
         $project->delete();
@@ -86,7 +90,8 @@ class ProjectController extends Controller
         ], 200);
     }
 
-    function PaginateIndex()  {
+    function PaginateIndex()
+    {
         $data = Project::paginate(2);
 
         return $data;

@@ -18,7 +18,20 @@ class ProjectSeeder extends Seeder
         for ($i=0; $i < 20; $i++) { 
             Project::create([
                 "user_id" => 1,
-                "tool_id" => 1,
+                "tool" => '[
+                    {
+                        "id": 1,
+                        "tools": "Figma",
+                        "created_at": "2024-02-21T00:41:56.000000Z",
+                        "updated_at": "2024-02-21T00:41:56.000000Z"
+                    },
+                    {
+                        "id": 2,
+                        "tools": "HTML",
+                        "created_at": "2024-02-21T00:41:56.000000Z",
+                        "updated_at": "2024-02-21T00:41:56.000000Z"
+                    }
+                ]',
                 "nama_project" => $faker->name(),
                 "deskripsi" => $faker->paragraph(),
             ]);

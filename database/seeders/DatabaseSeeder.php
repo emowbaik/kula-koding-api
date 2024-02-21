@@ -22,9 +22,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
 
         $this->call([
-            UserSeeder::class,
-            // ProjectSeeder::class,
-            ToolsSeeder::class
+            // UserSeeder::class,
+            ProjectSeeder::class,
+            ImageSeeder::class,
+            // ToolsSeeder::class
         ]);
     }
 }
