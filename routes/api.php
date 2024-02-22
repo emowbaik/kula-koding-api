@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ToolsController;
@@ -46,6 +47,7 @@ Route::prefix("/v1")->group(function () {
         Route::put("/project/{id}", [ProjectController::class, "Update"]);
         
         Route::prefix("/admin")->group(function (){
+            Route::resource("/blog", BlogController::class);
             Route::get("/latest", [UserController:: class, "Latest"]);
             Route::get("/total", [AdminProjectController::class, "TotalData"]);
             Route::resource("project", AdminProjectController::class);

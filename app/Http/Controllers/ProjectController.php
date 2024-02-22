@@ -61,7 +61,7 @@ class ProjectController extends Controller
 
         $project = Project::create($payload);
 
-        $image = $request->file("image");
+            $image = $request->file("image");
 
             $extension = $image->extension();
             $dir = "storage/project/";
