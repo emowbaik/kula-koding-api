@@ -48,6 +48,7 @@ Route::prefix("/v1")->group(function () {
         
         Route::prefix("/admin")->group(function (){
             Route::resource("/blog", BlogController::class);
+            Route::get("/blog/{slug}", [BlogController::class, "show"]);
             Route::get("/latest", [UserController:: class, "Latest"]);
             Route::get("/total", [AdminProjectController::class, "TotalData"]);
             Route::resource("project", AdminProjectController::class);

@@ -57,8 +57,10 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show($slug)
     {
+        $blog = Blog::with("user")->where("slug", $slug)->get();
+
         return response()->json($blog, 200);
     }
     
