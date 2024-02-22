@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ToolsRequest;
 use App\Models\Tools;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -25,10 +26,9 @@ class ToolsController extends Controller
         ], 200);
     }
 
-    function Store(Request $request) {
-        $validation = Validator::make($request->all(), [
+    function Store(ToolsRequest $request) {
 
-        ]);
+        $payload = $request->validated();
 
         $file = $request->file("image");
         $extension = $file->extension();
@@ -37,10 +37,7 @@ class ToolsController extends Controller
         $image = $dir . $name;
         $file->move($dir, $name);
 
-        $payload = [
-            "tools" => $request->tools,
-            "image" => $image
-        ];
+        $payload["image"] = $image;
 
         $tools = Tools::create($payload);
 
