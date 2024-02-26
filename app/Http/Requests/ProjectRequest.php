@@ -27,7 +27,8 @@ class ProjectRequest extends FormRequest
             "nama_project" => ["required"],
             "deskripsi" => ["required"],
             "user_id",
-            "tool",
+            "tool_id",
+            "image" => ["required", "file", "image"]
         ];
     }
 

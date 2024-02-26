@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Models\Project;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Tools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,9 +16,8 @@ use function Laravel\Prompts\alert;
 
 class ProjectController extends Controller
 {
-    function Index()
-    {
-        $data = Project::with("image")->paginate(6);
+    function Index() {
+        $data = Project::with(["image", "User"])->paginate(6);
 
         return $data;
     }
@@ -95,5 +95,17 @@ class ProjectController extends Controller
         $data = Project::paginate(2);
 
         return $data;
+    }
+
+    function TotalData() {
+        $user = User::all()->count();
+        $project = Project::all()->count();
+        $tools = Tools::all()->count();
+
+        return response()->json([
+            "user" => $user,
+            "project" => $project,
+            "tools" => $tools
+        ], 200);
     }
 }
