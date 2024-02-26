@@ -12,11 +12,11 @@ class UserController extends Controller
 {
     function Index() {
         $user = Auth::user();
-        $project = Project::where("user_id", $user->id)->paginate(6);
-
-        if ($project) {
+        $projects = Project::where("user_id", $user->id)->with("image")->paginate(6);
+    
+        if ($projects->count() > 0) {
             return response()->json([
-                "data" => $project 
+                "data" => $projects 
             ], 200);
         } else {
             return response()->json([

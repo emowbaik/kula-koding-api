@@ -16,14 +16,14 @@ class ImageSeeder extends Seeder
         // $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 20; $i++) {
-            $user = $i + 1;
+            $projectId = $i + 1;
             Image::create([
-                "project_id" => $user,
-                "image" => 'storage/project/q82htCqcrYv2CoGa683vg4yosDFcmskA.png',
+                "project_id" => $projectId,
+                "image" => "storage/project/aETFUnzrvveNNOuu7MnTNxEc2GIKDsNT.png",
             ]);
             Image::create([
-                "project_id" => $user,
-                "image" => 'storage/project/Mr7fbyPKXfQdDMEwufiXic9r8lnjxSz4.png',
+                "project_id" => $projectId,
+                "image" => "storage/project/l3LO18FhUNJiFfQlgZDOLJ2RU4cB6HqX.png",
             ]);
         }
     }
