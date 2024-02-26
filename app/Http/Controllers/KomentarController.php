@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class KomentarController extends Controller
 {
     function Show($id) {
-        $komentar = Komentar::with("User")->where("project_id", $id)->get();
+        $komentar = Komentar::with("User", "like")->where("project_id", $id)->get();
 
         if ($komentar) {
             return response()->json([

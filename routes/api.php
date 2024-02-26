@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\KomentarController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController as ControllersUserController;
@@ -45,6 +46,8 @@ Route::prefix("/v1")->group(function () {
         Route::get("/project/komentar/{id}", [KomentarController::class, "Show"]);
         Route::delete("/project/komentar/{id}/{komentar:id}", [KomentarController::class, "destroy"]);
         Route::put("/project/{id}", [ProjectController::class, "Update"]);
+        Route::post("/like", [LikeController::class, "store"]);
+        Route::get("/like/{id}", [LikeController::class, "show"]);
         
         Route::prefix("/admin")->group(function (){
             Route::resource("/blog", BlogController::class);
