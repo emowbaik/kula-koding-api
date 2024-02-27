@@ -24,7 +24,7 @@ class AuthController extends Controller
         }
 
         Hash::make($payload["password"]);
-        $payload["kelas"] = "12 PPLG B";
+        // $payload["kelas"] = "12 PPLG B";
 
         $user = User::create($payload);
 
@@ -86,6 +86,7 @@ class AuthController extends Controller
         // Validasi data
         $request->validate([
             'username' => ['nullable', 'string', Rule::unique('users')->ignore($loggedIn->id)],
+            'kelas' => ['nullable', 'string'],
             'email' => ['nullable', 'email', Rule::unique('users')->ignore($loggedIn->id)],
             'password' => ['nullable', 'string'],
         ]);
@@ -100,6 +101,7 @@ class AuthController extends Controller
         }
 
         $user->username = $request->username;
+        $user->kelas = $request->kelas;
         $user->email = $request->email;
 
         if ($request->filled('password')) {
