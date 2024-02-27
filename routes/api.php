@@ -1,15 +1,18 @@
 <?php
 
+use App\Http\Controllers\admin\KomentarController as AdminKomentarController;
 use App\Http\Controllers\admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController as ControllersUserController;
 use App\Http\Requests\KomentarRequest;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +53,8 @@ Route::prefix("/v1")->group(function () {
         Route::get("/like/{id}", [LikeController::class, "show"]);
         
         Route::prefix("/admin")->group(function (){
+            Route::get("/komentar", [AdminKomentarController::class, "Index"]);
+            Route::resource("/config", DashboardController::class);
             Route::resource("/blog", BlogController::class);
             Route::get("/blog/{slug}", [BlogController::class, "show"]);
             Route::get("/latest", [UserController:: class, "Latest"]);
