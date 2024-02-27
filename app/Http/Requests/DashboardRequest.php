@@ -24,7 +24,7 @@ class DashboardRequest extends FormRequest
         return [
             "config" => ["required"],
             "value" => ["required"],
-            "image" => ["required"]
+            "image",
         ];
     }
 }

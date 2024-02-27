@@ -11,7 +11,11 @@ use App\Models\Image;
 class DashboardController extends Controller
 {
     function Index() {
-        
+        $config = Config::with("Image")->get();
+
+        return response()->json([
+            "config" => $config
+        ], 200);
     }
 
     function Store(DashboardRequest $request) {
@@ -37,5 +41,22 @@ class DashboardController extends Controller
         return response()->json([
             "message" => "Data berhasil ditambahkan!"
         ], 201);
+    }
+
+    function Update($id, DashboardRequest $request) {
+        $config = Config::firstWhere("id", $id);
+        $payload = $request->validated();
+
+        $config->update($payload);
+
+        return response()->json([
+            "message" => "Data berhasil diupdate!"
+        ], 200);
+    }
+
+    function Show($id) {
+        $config = Config::firstWhere("id", $id);
+
+        return $config;
     }
 }
