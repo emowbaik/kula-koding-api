@@ -15,29 +15,92 @@ class ToolsSeeder extends Seeder
     {
         $data = [
             [
-                "tools" => "Figma"
+                "tools" => "Figma",
             ],
             [
-                "tools" => "HTML"
+                "tools" => "Framer",
             ],
             [
-                "tools" => "CSS"
+                "tools" => "Python",
             ],
             [
-                "tools" => "Javascript"
+                "tools" => "Arduino",
             ],
             [
-                "tools" => "PHP"
+                "tools" => "Angular",
             ],
             [
-                "tools" => "Composer"
+                "tools" => "Bootstrap",
             ],
             [
-                "tools" => "NodeJS"
+                "tools" => "Atom",
+            ],
+            [
+                "tools" => "Composer",
+            ],
+            [
+                "tools" => "C++",
+            ],
+            [
+                "tools" => "C#",
+            ],
+            [
+                "tools" => "Dart",
+            ],
+            [
+                "tools" => "Flutter",
+            ],
+            [
+                "tools" => "Go",
+            ],
+            [
+                "tools" => "Godot",
+            ],
+            [
+                "tools" => "Java",
+            ],
+            [
+                "tools" => "Kotlin",
+            ],
+            [
+                "tools" => "Laravel",
+            ],
+            [
+                "tools" => "Tailwind",
+            ],
+            [
+                "tools" => "Vue.js",
+            ],
+            [
+                "tools" => "Unity",
+            ],
+            [
+                "tools" => "Unreal Engine",
+            ],
+            [
+                "tools" => "HTML",
+            ],
+            [
+                "tools" => "CSS",
+            ],
+            [
+                "tools" => "Javascript",
+            ],
+            [
+                "tools" => "PHP",
+            ],
+            [
+                "tools" => "Sublime",
+            ],
+            [
+                "tools" => "React.js",
+            ],
+            [
+                "tools" => "Visual Studio Code",
             ],
         ];
 
-        foreach($data as $data) {
+        foreach ($data as $data) {
             Tools::create([
                 "tools" => $data["tools"],
             ]);

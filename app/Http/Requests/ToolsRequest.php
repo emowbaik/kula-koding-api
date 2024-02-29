@@ -23,7 +23,7 @@ class ToolsRequest extends FormRequest
     {
         return [
             "tools" => ["required"],
-            "image" => ["required", "file", "image"]
+            "icon" => ["required"]
         ];
     }
 }
